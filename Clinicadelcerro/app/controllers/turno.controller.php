@@ -6,9 +6,10 @@ require_once 'Clinicadelcerro/views/turno.view.php';
 class TurnoController {
     private $model;
     private $view;
+    private $modelP;
 
     public function __construct() {
-        $this->model = new TurnoModel();
+        $this->model = new TurnosModel();
         $this->view = new TurnoView();
         $this->modelP = new ProfesionalModel();
     }
@@ -22,16 +23,17 @@ class TurnoController {
     public function agregarturno(){
         $fecha = $_POST['fecha'];
         $dnipaciente = $_POST['dnipaciente'];
+        $id_profesional_fk = $_POST['id_profesional_fk'];
 
-        $profesional = $this->modelP->traerProfesional($dnipaciente); 
+        $profesional= $this->modelP->traerProfesional($id_profesional_fk); 
         if(empty($profesional)){
-            $this->view->error();
+            $this->view->error('no existe');
         }
 
         $fechaturno = $this->model->traerxfecha($fecha, $profesional->id);
 
         if(!empty($fechaturno)){
-            $this->view->ocupado();
+            $this->view->ocupado('esta ocupado');
         } else {
             $id = $this->model->agregarturno($fecha, $profesional->id, $dnipaciente);
         }

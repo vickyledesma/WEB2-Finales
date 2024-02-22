@@ -14,11 +14,10 @@ class ProfesionalModel {
         return $profesionales;
     }
     
-    function traerprofesional($profesional){
-        $query = $this->db->prepare("SELECT * FROM profesional");
+    function traerprofesional($id){
+        $query = $this->db->prepare("SELECT * FROM profesional WHERE id = ?");
         $query->execute();
-        $profesionales = $query->fetchAll(PDO::FETCH_OBJ); 
-        
-        return $profesionales;
+        $profesional = $query->fetch(PDO::FETCH_OBJ); 
+        return $profesional;
     }
 }

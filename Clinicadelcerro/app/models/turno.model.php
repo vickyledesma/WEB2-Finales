@@ -13,17 +13,17 @@ class TurnosModel {
         
         return $turno;
     }
-    function traerxprofesional($profesional){
-        $query = $this->db->prepare("SELECT * FROM turnos WHERE id_profesional_fk = ? ");
-        $query->execute([$id_profesional]);
+    function traerxfecha( $fecha , $id_profesional_fk){
+        $query = $this->db->prepare("SELECT * FROM turnos WHERE fecha = ? AND id_profesional_fk = ? ");
+        $query->execute([$fecha, $id_profesional_fk]);
         $profesionales = $query->fetchAll(PDO::FETCH_OBJ); 
         return $profesionales;
     }
-    function traerxfecha( $fecha , $profesional){
-        $query = $this->db->prepare("SELECT * FROM turnos WHERE fecha = ? AND id_profesional_fk = ? ");
-        $query->execute([$fecha, $id_profesional]);
-        $profesionales = $query->fetchAll(PDO::FETCH_OBJ); 
-        return $profesionales;
+
+    public function agregarturno($fecha, $id_profesional_fk, $dnipaciente){
+        $query = $this->db->prepare("INSERT INTO turnos (fecha,id_profesional_fk,dnipaciente) VALUES(?,?,?)");
+        $query->execute([$fecha, $id_profesional_fk, $dnipaciente]);
+        return $this->db->lastInsertId();
     }
 
     
