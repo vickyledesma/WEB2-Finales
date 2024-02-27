@@ -21,10 +21,8 @@ class Turnoapi {
             foreach($turnos as $turno){
                 $profesional = $this->modelP->traerprofesional($turno->id_profesional_fk);
                 $info = array (
-                    'id' => $turno->id_turno,
                     'fecha' => $turno->fecha,
                     'dnipaciente' => $turno->dnipaciente,
-                    'profesional' => $profesional->id,
                     'nombre' => $profesional->nombre,
                     'especialidad' => $profesional->especialidad,
                 );

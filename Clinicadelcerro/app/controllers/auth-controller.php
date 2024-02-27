@@ -2,11 +2,13 @@
 
 class authController {
     private $model;
+    private $helper;
     private $view;
 
     public function __construct() {
         $this->model = new AuthModel();
         //$this->view = new AuthView();
+        $this->helper = new AuthHelper();
     }
     public function ingresar() {
         $this->view->ingresarform();
@@ -19,20 +21,15 @@ class authController {
         $usuario = $this->model->getUserByEmail($email);
 
         if ($usuario && password_verify($contraseña, $usuario->contraseña)) {
-
-            session_start();
-            $_SESSION['usuario'] =$usuario->id;
-            $_SESSION['email'] =$usuario->email;
-            $_SESSION['rol'] = $usuario->$rol;
-            $_SESSION['IS_LOGGED'] = true;
-
-
-            //header("Location: " . BASE_URL . 'lista'); 
+            $this->helper->login($usuario);
         } else {
-        
            $this->view->ingresarform("El usuario o la contraseña no existe.");
         } 
     }
+    public function logout() {
+        $this->helper->logout();
+    }
+
     
 }
    
