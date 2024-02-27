@@ -2,7 +2,6 @@
 class ProfesionalController {
     private $model;
     private $view;
-    private $helper;
 
     public function __construct() {
         $this->view = new TurnoView();

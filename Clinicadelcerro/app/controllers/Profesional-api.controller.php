@@ -10,7 +10,7 @@ class Profesionalapi {
         $this->view = new view();
     }
 
-    public function obtenerprofesionales($params = null){
+    public function obtenerprofesionales(){
         $profesionales = $this->model->profesional();
         if(empty($profesionales)){
             //$this->view->response("error",404);
