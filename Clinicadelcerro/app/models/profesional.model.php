@@ -13,6 +13,9 @@ class ProfesionalModel {
         
         return $profesionales;
     }
+    function agregarprofesional($nombre, $especialidad){
+        
+    }
     
     function traerprofesional($id){
         $query = $this->db->prepare("SELECT * FROM profesional WHERE id = ?");
