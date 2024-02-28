@@ -13,23 +13,16 @@ require_once 'views/encomiendaview.php';
         $this->view = new View();
     }
 
-    public function mostrarlista() {
-        $comisionistas = $this->comisionistamodel->comisionistas();
-        $encomiendas = $this->encomiendamodel->encomiendas();
 
-        $this->view->mostrarlista($comisionistas,$encomiendas);
-    }
-    public function GenerarIdTracking() {
-        return bin2hex(random_bytes(16)); // Genera un ID de 32 caracteres hexadecimales
-    }
 
     public function agregarencomienda(){
+        $id_tracking = $_POST['id_traking'];
         $peso = $_POST['peso'];
         $destinatario = $_POST['destinatario'];
         $fecha =$_POST['fecha'];
 
 
-        if (empty($peso)||empty($destinatario)||empty($fecha)) {
+        if (empty($id_tracking)||empty($peso)||empty($destinatario)||empty($fecha)) {
             $this->view->mostrarerror('Faltan datos obligatorios');
         } else { 
             $comisionistapeso = $this->comisionistamodel->comisionistaxpeso($peso);
@@ -40,15 +33,11 @@ require_once 'views/encomiendaview.php';
             if(!empty($comisionistalibre)){
                 $this->view->mostrarerror("no hay libres");
             }
-            $id_traking = $this->GenerarIdTracking();
     
-            $id = $this->encomiendamodel->agregarencomienda($peso,$destinatario,$comisionistapeso->id_comisionista,$id_traking,$fecha);
+            $id = $this->encomiendamodel->agregarencomienda($id_tracking,$peso,$destinatario,$comisionistapeso->id_comisionista,$fecha);
             if(!empty($id)){
                 $this->view->mostrarerror("Errror");
             }}
-    }
-    public function actualizarEstadoEncomienda($idTracking, $nuevoEstado) {
-        $this->encomiendamodel->actualizarEstadoEncomienda($idTracking, $nuevoEstado);
     }
 
     public function cantencomiendasxciudad(){
@@ -59,7 +48,7 @@ require_once 'views/encomiendaview.php';
         if(empty($cantentregadas)){
             $this->view->mostrarerror('no hay entregas para ese dia');
         } else {
-            $this->view->mostrarexito('se encontraron entregas' , $cantentregadas);       
+           // $this->view->mostrarexito('se encontraron entregas' , $cantentregadas);       
         
         }
     }

@@ -26,5 +26,21 @@ Class fixtureModel{
         $query->execute([$fecha,$hora,$golesL,$golesV,$jugado,$canchaid,$equipoV,$equipoL]);
         return $this->db->lastInsertId();
     }
-
+     
+    public function getpartido($fecha){
+        $query = $this->db->prepare("SELECT FROM Fixture 
+                                    WHERE jugado = true AND fecha = ?");
+        $query->execute([$fecha]);
+        $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+        return $resultado;
+    }
+    public function cantPartidosJugados($id){
+        $query = $this->db->prepare("SELECT COUNT(*) as cantidad jugados
+                                    FROM fixture
+                                    WHERE equipo_local_id = ? OR equipo_visitante_id = ?
+                                    AND jugado = true");
+         $query->execute([$id, $id]);
+         $resultado = $query->fetchAll(PDO::FETCH_OBJ);
+         return $resultado;
+    }
 }

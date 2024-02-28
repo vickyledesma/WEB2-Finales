@@ -3,15 +3,18 @@ Class fixturecontroller {
     private $fixtureModel;
     private $equipoModel;
     private $canchaModel;
+    private $helper;
 
     function __construct()
     {
         $this->fixtureModel = new fixtureModel();
         $this->canchaModel = new canchaModel();
         $this->equipoModel = new equipoModel();
+        $this->helper = new Helper();
     }
 
     public function agregoturno(){
+        if($this->helper->checkLogged()){
         $fecha = $_POST['fecha'];
         $hora = $_POST['hora'];
         $golesL = $_POST['golesL'];
@@ -41,8 +44,6 @@ Class fixturecontroller {
         } else {
             //$this->view->error  
         }
-
-       
-    }
+    }}
 
 }

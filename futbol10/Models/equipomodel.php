@@ -12,4 +12,5 @@ Class equipoModel{
         $resultado = $query->fetch(PDO::FETCH_OBJ);
         return $resultado;
     }
+
 }

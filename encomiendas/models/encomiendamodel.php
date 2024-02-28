@@ -40,4 +40,11 @@ Class encomiendamodel{
         $cantentregadas = $query->fetchAll(PDO::FETCH_OBJ);   
         return $cantentregadas;
     }
+
+    public function getencomienda($id_tracking){
+        $query = $this->db->prepare("SELECT * FROM encomienda WHERE id_tracking = ?");
+        $query->execute(([$id_tracking]));
+        $resultado = $query->fetch(PDO::FETCH_OBJ);
+        return $resultado;
+    }
 }
